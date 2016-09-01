@@ -2,7 +2,7 @@ project(pugixml)
 
 cmake_minimum_required(VERSION 2.6)
 
-option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
+option(BUILD_SHARED_LIBS "Build shared instead of static library" ON)
 option(BUILD_TESTS "Build tests" OFF)
 set(BUILD_DEFINES "" CACHE STRING "Build defines")
 
@@ -45,7 +45,9 @@ if(NOT ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} STRLESS 3.1 AND ";${CMAKE_C
 	target_compile_features(pugixml PUBLIC cxx_long_long_type)
 endif()
 
-set_target_properties(pugixml PROPERTIES VERSION 1.7 SOVERSION 1)
+if(NOT BUILD_SHARED_LIBS)
+	set_target_properties(pugixml PROPERTIES VERSION 1.7 SOVERSION 1)
+endif()
 
 install(TARGETS pugixml EXPORT pugixml-config
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
